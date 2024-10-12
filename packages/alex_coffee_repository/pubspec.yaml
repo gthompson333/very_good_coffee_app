@@ -1,0 +1,16 @@
+name: alex_coffee_repository
+description: A repository for the coffee image information from the alex flipnote site.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.5.3
+
+dev_dependencies:
+  very_good_analysis: ^6.0.0
+
+dependencies:
+  http: ^1.2.2
+
+
+
