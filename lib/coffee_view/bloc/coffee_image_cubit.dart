@@ -6,10 +6,13 @@ part 'coffee_image_state.dart';
 
 class CoffeeImageCubit extends Cubit<CoffeeState> {
   CoffeeImageCubit({required AlexCoffeeRepository coffeeRepository})
-      : _coffeeRepository = coffeeRepository,
-        super(const CoffeeState());
+      : super(const CoffeeState()) {
+    _coffeeRepository = coffeeRepository;
+    // Lets try to fetch an image from the get go.
+    fetchCoffeeImage();
+  }
 
-  final AlexCoffeeRepository _coffeeRepository;
+  late final AlexCoffeeRepository _coffeeRepository;
 
   Future<void> fetchCoffeeImage() async {
     emit(state.copyWith(status: CoffeeStatus.inProgress));

@@ -17,6 +17,9 @@ class CoffeeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+      ),
       home: BlocProvider(
         // Inject the instance of the coffee repository into the cubit.
         create: (context) =>
