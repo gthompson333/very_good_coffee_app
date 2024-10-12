@@ -5,8 +5,8 @@ class CoffeeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Coffee Image'),
+    return Center(
+      child: Image.network('src'),
     );
   }
 }

@@ -10,13 +10,14 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  alex_coffee_repository:
+    path: packages/alex_coffee_repository
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
   very_good_analysis: ^6.0.0
