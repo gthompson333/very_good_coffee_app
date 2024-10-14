@@ -12,6 +12,24 @@ in the device's local photo gallery.
 
 The app is designed to run on both iOS and Android.
 
+## Instructions to build and run
+Simply clone the repo.
+Launch either your Android emulator or iOS simulator.
+Run the app's main.dart main function.
+The app should build and run without issue.
+The user should see a coffee image appear upon launch.
+There are three buttons in the upper right.
+From left to right:
+- Select the image as a favorite.
+- Launch the photo gallery.
+- Fetch a new coffee image.
+
+After "favoriting" an image, a snackbar notification should appear letting the user know
+the image was successfully saved to the device's photo gallery.
+
+The user can then tap the "photo gallery" button to see the image stored locally on the device
+in the photo gallery.
+
 ## Minimum User Requirements
 As a user, I should be able to:
 
