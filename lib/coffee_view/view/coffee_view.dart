@@ -16,6 +16,12 @@ class _CoffeeViewState extends State<CoffeeView> {
   bool _isFavorite = false;
 
   @override
+  void initState() {
+    BlocProvider.of<ImageNetworkCubit>(context).fetchImageData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

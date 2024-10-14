@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string>The Very Good Coffee app would like permission to save photos on the device.</string>
 </dict>
 </plist>

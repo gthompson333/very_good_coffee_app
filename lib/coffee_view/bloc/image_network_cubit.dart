@@ -10,8 +10,6 @@ class ImageNetworkCubit extends Cubit<ImageNetworkState> {
   ImageNetworkCubit({required AlexCoffeeRepository coffeeRepository})
       : super(const ImageNetworkState()) {
     _coffeeRepository = coffeeRepository;
-    // Lets try to fetch an image data from the get go.
-    fetchImageData();
   }
 
   late final AlexCoffeeRepository _coffeeRepository;

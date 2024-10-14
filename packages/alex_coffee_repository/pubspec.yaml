@@ -7,10 +7,12 @@ environment:
   sdk: ^3.5.3
 
 dev_dependencies:
+  test: ^1.25.8
   very_good_analysis: ^6.0.0
-
 dependencies:
   http: ^1.2.2
+
+
 
 
 
