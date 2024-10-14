@@ -37,4 +37,8 @@ class ImageStorageCubit extends Cubit<ImageStorageState> {
       emit(state.copyWith(status: ImageStorageStatus.error));
     }
   }
+
+  Future<void> showImageGallery() async {
+    await Gal.open();
+  }
 }
