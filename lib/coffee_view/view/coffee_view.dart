@@ -1,11 +1,7 @@
-import 'dart:developer';
-import 'dart:typed_data';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gal/gal.dart';
-import 'package:very_good_coffee_app/coffee_view/bloc/coffee_image_cubit.dart';
+import 'package:very_good_coffee_app/coffee_view/bloc/image_network_cubit.dart';
+import 'package:very_good_coffee_app/coffee_view/bloc/image_storage_cubit.dart';
 import 'package:very_good_coffee_app/constants.dart';
 
 class CoffeeView extends StatefulWidget {
@@ -26,32 +22,26 @@ class _CoffeeViewState extends State<CoffeeView> {
         title: const Text('Very Good Coffee App'),
         actions: [
           IconButton(
-            onPressed: () async {
-              log(coffeeImageFilePath!);
-              await _saveNetworkImage(coffeeImageFilePath!);
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Saved! ✅'),
-                  ),
-                );
-              }
+            onPressed: () {
+              context
+                  .read<ImageStorageCubit>()
+                  .saveImageToGallery(coffeeImageFilePath!);
             },
             icon: const Icon(Icons.favorite_border),
           ),
           IconButton(
             onPressed: () {
-              context.read<CoffeeImageCubit>().fetchCoffeeFileData();
+              context.read<ImageNetworkCubit>().fetchImageData();
             },
             icon: const Icon(Icons.refresh),
           ),
         ],
       ),
-      body: BlocBuilder<CoffeeImageCubit, CoffeeState>(
+      body: BlocBuilder<ImageNetworkCubit, ImageNetworkState>(
         builder: (context, state) {
-          switch (state.coffeeStatus) {
-            case CoffeeStatus.success:
-              coffeeImageFilePath = state.coffeeData!.file;
+          switch (state.imageNetworkStatus) {
+            case ImageNetworkStatus.success:
+              coffeeImageFilePath = state.imageNetworkData!.file;
               return Column(
                 children: [
                   verticalSpace60,
@@ -79,15 +69,15 @@ class _CoffeeViewState extends State<CoffeeView> {
                   ),
                 ],
               );
-            case CoffeeStatus.inProgress:
+            case ImageNetworkStatus.inProgress:
               return const Center(
                 child: RefreshProgressIndicator(),
               );
-            case CoffeeStatus.error:
+            case ImageNetworkStatus.error:
               return const Center(
                 child: Text('ERROR: Unable to fetch a coffee image.'),
               );
-            case CoffeeStatus.initial:
+            case ImageNetworkStatus.initial:
               return const Center(
                 child: Text('Initializing ...'),
               );
@@ -95,17 +85,5 @@ class _CoffeeViewState extends State<CoffeeView> {
         },
       ),
     );
-  }
-
-  Future<void> _saveNetworkImage(String imagePath) async {
-    final imageResponse = await Dio().get<List<int>>(
-      imagePath,
-      options: Options(
-        responseType: ResponseType.bytes,
-      ),
-    );
-
-    await Gal.putImageBytes(Uint8List.fromList(imageResponse.data!),
-        album: 'Very Good Coffee');
   }
 }
