@@ -1,10 +1,22 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gal/gal.dart';
 import 'package:very_good_coffee_app/coffee_view/bloc/coffee_image_cubit.dart';
 import 'package:very_good_coffee_app/constants.dart';
 
-class CoffeeView extends StatelessWidget {
+class CoffeeView extends StatefulWidget {
   const CoffeeView({super.key});
+
+  @override
+  State<CoffeeView> createState() => _CoffeeViewState();
+}
+
+class _CoffeeViewState extends State<CoffeeView> {
+  String? coffeeImageFilePath;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +26,22 @@ class CoffeeView extends StatelessWidget {
         title: const Text('Very Good Coffee App'),
         actions: [
           IconButton(
+            onPressed: () async {
+              log(coffeeImageFilePath!);
+              await _saveNetworkImage(coffeeImageFilePath!);
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Saved! ✅'),
+                  ),
+                );
+              }
+            },
+            icon: const Icon(Icons.favorite_border),
+          ),
+          IconButton(
             onPressed: () {
-              context.read<CoffeeImageCubit>().fetchCoffeeImage();
+              context.read<CoffeeImageCubit>().fetchCoffeeFileData();
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -25,6 +51,7 @@ class CoffeeView extends StatelessWidget {
         builder: (context, state) {
           switch (state.coffeeStatus) {
             case CoffeeStatus.success:
+              coffeeImageFilePath = state.coffeeData!.file;
               return Column(
                 children: [
                   verticalSpace60,
@@ -44,7 +71,8 @@ class CoffeeView extends StatelessWidget {
                           ),
                         ],
                         image: DecorationImage(
-                          image: NetworkImage(state.coffeeData!.file),
+                          // CoffeeData should never be null here.
+                          image: NetworkImage(coffeeImageFilePath!),
                         ),
                       ),
                     ),
@@ -67,5 +95,17 @@ class CoffeeView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _saveNetworkImage(String imagePath) async {
+    final imageResponse = await Dio().get<List<int>>(
+      imagePath,
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+
+    await Gal.putImageBytes(Uint8List.fromList(imageResponse.data!),
+        album: 'Very Good Coffee');
   }
 }

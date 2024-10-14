@@ -9,15 +9,15 @@ class CoffeeImageCubit extends Cubit<CoffeeState> {
       : super(const CoffeeState()) {
     _coffeeRepository = coffeeRepository;
     // Lets try to fetch an image from the get go.
-    fetchCoffeeImage();
+    fetchCoffeeFileData();
   }
 
   late final AlexCoffeeRepository _coffeeRepository;
 
-  Future<void> fetchCoffeeImage() async {
+  Future<void> fetchCoffeeFileData() async {
     emit(state.copyWith(status: CoffeeStatus.inProgress));
     try {
-      final alexCoffee = await _coffeeRepository.fetchCoffee();
+      final alexCoffee = await _coffeeRepository.fetchCoffeeFileData();
       emit(
         state.copyWith(coffeeData: alexCoffee, status: CoffeeStatus.success),
       );
