@@ -4,11 +4,11 @@
 A Flutter app that allows a user to load a coffee image from a remote network
 endpoint.
 
-In addition, the user can tap a "favorite" button to store the image in the devices local
-photo gallery.
+In addition, the user can tap a "favorite" button to store the image in the device's local
+photos gallery.
 
 The user can also tap a "photos" button to see all of the user's favorite photos that are stored
-in the device's local photo gallery.
+in the device's local photos gallery.
 
 The app is designed to run on both iOS and Android.
 
