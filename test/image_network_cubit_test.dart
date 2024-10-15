@@ -12,7 +12,7 @@ void main() {
           ImageNetworkCubit(coffeeRepository: AlexCoffeeRepository());
     });
 
-    test('initial state is initializing', () {
+    test('Initial state of the cubit is the initial state.', () {
       expect(
         imageNetworkCubit.state.imageNetworkStatus,
         equals(ImageNetworkStatus.initial),
@@ -20,7 +20,8 @@ void main() {
     });
 
     blocTest<ImageNetworkCubit, ImageNetworkState>(
-      'emits an alex coffee instance',
+      'Emits two states. First one for in progress and the second one '
+      'for successfully saving the image.',
       build: () => imageNetworkCubit,
       act: (cubit) => cubit.fetchImageData(),
       expect: () => [isA<ImageNetworkState>(), isA<ImageNetworkState>()],
