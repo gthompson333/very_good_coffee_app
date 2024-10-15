@@ -30,6 +30,9 @@ the image was successfully saved to the device's photo gallery.
 The user can then tap the "photo gallery" button to see the image stored locally on the device
 in the photo gallery.
 
+## Unit tests
+Unit tests are in place for both the image network cubit and the image storage cubit.
+
 ## Minimum User Requirements
 As a user, I should be able to:
 
